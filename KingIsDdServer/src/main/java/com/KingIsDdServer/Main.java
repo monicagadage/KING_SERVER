@@ -14,8 +14,8 @@ public class Main {
 	
         for (int i = 1 ; i <=2 ;i ++) {
         	String playerName = "P" + i;
-        	String readPath = "From" + playerName;
-        	String writePath = "To" + playerName;
+        	String readPath = "/tmp/From" + playerName;
+        	String writePath = "/tmp/To" + playerName;
         	 File readFileName = new File(readPath);
         	 readFileName.deleteOnExit();
          File writeFileName = new File(writePath);
