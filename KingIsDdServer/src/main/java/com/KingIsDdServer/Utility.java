@@ -26,9 +26,9 @@ public class Utility {
 		System.out.println("in 2");
 		try {
 			
-			FileInputStream fInP1 = new FileInputStream("FromP1");
+			FileInputStream fInP1 = new FileInputStream("/tmp/FromP1");
 			BufferedReader bReadP1 = new BufferedReader(new InputStreamReader(fInP1));
-			FileInputStream fInP2 = new FileInputStream("FromP2");
+			FileInputStream fInP2 = new FileInputStream("/tmp/FromP2");
 			BufferedReader bReadP2 = new BufferedReader(new InputStreamReader(fInP2));
 
 			System.out.println("in 3");
@@ -42,19 +42,19 @@ public class Utility {
 				}
 				if(lineP1 != null) {
 					canBreakP1 = parseMessage(lineP1, "P1");
-					clearTheFile("FromP1");
+					clearTheFile("/tmp/FromP1");
 					fInP1.getChannel().position(0);
 					bReadP1 = new BufferedReader(new InputStreamReader(fInP1));
 					if(canBreakP1)
-						Utility.writeFile("ToP1", "Game End", "P1");
+						Utility.writeFile("/tmp/ToP1", "Game End", "P1");
 				}
 				if(lineP2 != null) {
 					canBreakP2 = parseMessage(lineP2, "P2");
-					clearTheFile("FromP2");
+					clearTheFile("/tmp/FromP2");
 					fInP1.getChannel().position(0);
 					bReadP2 = new BufferedReader(new InputStreamReader(fInP1));
 					if(canBreakP2)
-						Utility.writeFile("ToP2", "Game End", "P2");
+						Utility.writeFile("/tmp/ToP2", "Game End", "P2");
 				}
 				
 				if(canBreakP1 && canBreakP2)
