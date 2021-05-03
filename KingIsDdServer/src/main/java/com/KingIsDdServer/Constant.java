@@ -15,12 +15,12 @@ public class Constant {
 	public static final String COMMA = ",";
 	public static final String SEMICOLLEN = ";";
 	
-	public static final String ZERO = "1";
+	public static final String ZERO = "0";
 
 	public static final String ONE = "1";
-	public static final String TWO = "1";
-	public static final String THREE = "1";
-	public static final String FOUR = "1";
+	public static final String TWO = "2";
+	public static final String THREE = "3";
+	public static final String FOUR = "4";
 	
 	public static final String MESSAAGE_02 = "02";
 	public static final String MESSAAGE_03 = "03";
