@@ -1,6 +1,7 @@
 package com.KingIsDdServer;
 
 import java.util.ArrayList;
+
 import java.util.Random;
 
 public class GameProcessing {
@@ -12,11 +13,11 @@ public class GameProcessing {
 		
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_02).append(":");
 		message.append(Constant.MORAY_CHAR).append(Constant.COMMA)
-				.append(Constant.FOUR).append(Constant.ZERO).append(Constant.ZERO)
-				.append(Constant.SEMICOLLEN).append(Constant.GWYNEDD_CHAR).append(Constant.COMMA)
-				.append(Constant.ZERO).append(Constant.FOUR).append(Constant.ZERO)
-				.append(Constant.SEMICOLLEN).append(Constant.ESSEX_CHAR).append(Constant.COMMA)
-				.append(Constant.ZERO).append(Constant.ZERO).append(Constant.FOUR);
+				.append(Constant.FOUR).append(Constant.COMMA).append(Constant.ZERO).append(Constant.COMMA).append(Constant.ZERO)
+				.append(Constant.COMMA).append(Constant.GWYNEDD_CHAR).append(Constant.COMMA)
+				.append(Constant.ZERO).append(Constant.COMMA).append(Constant.FOUR).append(Constant.COMMA).append(Constant.ZERO)
+				.append(Constant.COMMA).append(Constant.ESSEX_CHAR).append(Constant.COMMA)
+				.append(Constant.ZERO).append(Constant.COMMA).append(Constant.ZERO).append(Constant.COMMA).append(Constant.FOUR);
 		
 		ArrayList<String> loca = new ArrayList<String>();
 		loca.add(Constant.STRATHCLYDE_CHAR);
@@ -30,7 +31,7 @@ public class GameProcessing {
 			int n1 = random.nextInt(4);
 			int n2 = random.nextInt(4 - n1);
 			int n3 = 4 - n1 - n2;	
-			message.append(Constant.SEMICOLLEN).append(loca.get(i)).append(Constant.COMMA).append(n1).append(n2).append(n3);
+			message.append(Constant.COMMA).append(loca.get(i)).append(Constant.COMMA).append(n1).append(Constant.COMMA).append(n2).append(Constant.COMMA).append(n3);
 		}
 		Utility.writeAllFile(filePath, message.toString());
 
@@ -48,9 +49,9 @@ public static void distributeFoll(String filePath) throws InterruptedException {
 			int n3 = 3 - n1 - n2;		
 			String playerName = "P" + i;
 			if(i < 3)
-				message.append(playerName).append(Constant.COMMA).append(n1).append(n2).append(n3).append(Constant.COMMA);
+				message.append(playerName).append(Constant.COMMA).append(n1).append(Constant.COMMA).append(n2).append(Constant.COMMA).append(n3).append(Constant.COMMA);
 			else
-				message.append(playerName).append(Constant.COMMA).append(n1).append(n2).append(n3);
+				message.append(playerName).append(Constant.COMMA).append(n1).append(Constant.COMMA).append(n2).append(Constant.COMMA).append(n3);
 	}
 	Utility.writeAllFile(filePath, message.toString());
 	
