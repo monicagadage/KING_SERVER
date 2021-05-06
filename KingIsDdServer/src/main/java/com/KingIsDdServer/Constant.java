@@ -25,5 +25,13 @@ public class Constant {
 	public static final String MESSAAGE_02 = "02";
 	public static final String MESSAAGE_03 = "03";
 	public static final String MESSAAGE_04 = "04";
+	public static final String MESSAAGE_06 = "06";
+	public static final String MESSAAGE_07 = "07";
+	public static final String MESSAAGE_08 = "08";
+	public static final String MESSAAGE_09 = "09";
+	public static final String MESSAAGE_10 = "10";
+	public static final String MESSAAGE_11 = "11";
+	public static final String MESSAAGE_12 = "12";
+	public static final String MESSAAGE_13 = "13";
 	
 }

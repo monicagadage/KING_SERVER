@@ -17,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 
@@ -139,17 +141,55 @@ public class Utility {
         fwOb.close();
     }
 
-	public static Boolean parseMessage(String line, String playerName) {
+	public static Boolean parseMessage(String line, String playerName) throws InterruptedException {
 		
 		if(line.equals("END")) {
 			return true;
 		}
+		String[] messageArray = line.split(":");
+		String[] messageDetails = messageArray[1].split(",");
+		String messageNumber = messageArray[0];
+		List<String> messageDetailsList = new ArrayList<>(Arrays.asList(messageDetails));
+		
+		
+		
+		if ("15".equals(messageNumber))
+			GameProcessing.pass(messageNumber, messageDetailsList);
+		else if("07".equals(messageNumber))
+			GameProcessing.SWEcarsProcess(messageNumber, messageDetailsList);
+		else if("08".equals(messageNumber))
+			GameProcessing.AssembleCardProcess(messageNumber, messageDetailsList);
+		else if("09".equals(messageNumber))
+			GameProcessing.ManoeuvreCardProcess (messageNumber, messageDetailsList);
+		else if("10".equals(messageNumber))
+			GameProcessing.OutManoeuvreCardProcess (messageNumber, messageDetailsList);
+		else if("11".equals(messageNumber))
+			GameProcessing.NegotiateCardProcess (messageNumber, messageDetailsList);
+		else if("12".equals(messageNumber)) {
+			GameProcessing.SupporterDraw (messageNumber, messageDetailsList,playerName);
+			
+			//here comes the next player selection logic.
+			if(Main.tempplayernameslist.size()>0) {
+				GameProcessing.PlayerTurn(Main.tempplayernameslist.get(0),Main.writeFile);
+				Main.tempplayernameslist.remove(0);
+			}
+			else {
+				//if a round is over
+				Main.tempplayernameslist =Main.playernameslist;
+				GameProcessing.PlayerTurn(Main.playernameslist.get(0),Main.writeFile);
+				Main.tempplayernameslist.remove(0);
+			}
+			
+		}
+			
+		
+		
 		else{
 			System.out.println("Message from " +  playerName + "--> " + line);
 			// TODO Auto-generated method stub
-			return false;
+			
 		}
-		
+		return false;
 	}
 	
 	public static void writeAllFile( String writeFile ,  String message ) throws InterruptedException  {
@@ -158,15 +198,15 @@ public class Utility {
 			try {
 			String writeFileP = writeFile + Thread.currentThread().getName();
 			File file1 = new File(writeFileP);
-			System.out.println(file1);
-			System.out.println(file1.length());
+		//	System.out.println("file1 "+file1);
+		//	System.out.println("file1.length() "+file1.length());
 			if(file1.length() > 0 ) {
 				System.out.println("I");
 				while (file1.length() > 0) { 
 					
 				}
 			}
-				System.out.println(Thread.currentThread().getName());
+				System.out.println("Thread "+Thread.currentThread().getName());
 				OutputStream outputStream = Files.newOutputStream(file1.toPath(), WRITE);
 				outputStream.write(message.getBytes());
 				outputStream.close();
