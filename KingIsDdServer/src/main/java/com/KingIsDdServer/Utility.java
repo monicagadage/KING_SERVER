@@ -156,24 +156,27 @@ public class Utility {
 		
 		Runnable runnable = () -> {
 			try {
-			String writeFileP = writeFile + Thread.currentThread().getName();
-			File file1 = new File(writeFileP);
-			System.out.println(file1);
-			System.out.println(file1.length());
-			if(file1.length() > 0 ) {
-				System.out.println("I");
-				while (file1.length() > 0) { 
-					
-				}
-			}
-				System.out.println(Thread.currentThread().getName());
-				OutputStream outputStream = Files.newOutputStream(file1.toPath(), WRITE);
-				outputStream.write(message.getBytes());
-				outputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			     String writeFileP = writeFile + Thread.currentThread().getName();
+//          File file1 = new File(writeFileP);
+//          System.out.println(file1);
+//          System.out.println(file1.length());
+//          if(file1.length() > 0 ) {
+//              System.out.println("I");
+//              while (file1.length() > 0) { 
+
+//              }
+//          }
+//              System.out.println(Thread.currentThread().getName());
+                Path path = Paths.get(writeFileP);
+                                OutputStream outputStream = Files.newOutputStream(path, WRITE);
+
+//                OutputStream outputStream = Files.newOutputStream(file1.toPath(), WRITE);
+                outputStream.write(message.getBytes());
+                outputStream.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 		};
 		
 		Thread t1 = new Thread(runnable);
