@@ -114,7 +114,9 @@ public class GameProcessing {
 		
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
 		message.append(playerSeq.get(0));
-		Utility.writeFile(filePath, message.toString());
+		for(int i = 0 ; i <= 3 ; i ++)
+			Utility.writeFile(filePath + "P"+i , message.toString());
+		
 		return playerSeq;
 	}
 	
