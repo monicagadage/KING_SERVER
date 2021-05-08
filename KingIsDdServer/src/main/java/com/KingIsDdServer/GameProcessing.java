@@ -1,10 +1,12 @@
 package com.KingIsDdServer;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class GameProcessing {
+	public static ArrayList<String> CardsPlayedByPlayerInfo = new ArrayList<String>();
 
 	public static void initializeFile(String filePath) throws InterruptedException {
 
@@ -35,7 +37,7 @@ public class GameProcessing {
 		}
 		System.out.println("02 Message " + message.toString());
 		for (int i=1;i<=3;i++)
-		Utility.writeAllFile(filePath+"P"+i, message.toString());
+		Utility.writeFile(filePath+"P"+i, message.toString());
 
 	}
 
@@ -59,7 +61,7 @@ public class GameProcessing {
 		}
 		System.out.println("03 Message " + message.toString());
 		for (int i=1;i<=3;i++)
-		Utility.writeAllFile(filePath+"P"+i, message.toString());
+		Utility.writeFile(filePath+"P"+i, message.toString());
 
 	}
 
@@ -91,8 +93,90 @@ public class GameProcessing {
 		}
 		System.out.println("04 Message " + message.toString());
 		for (int i=1;i<=3;i++)
-		Utility.writeAllFile(filePath+"P"+i, message.toString());
+		Utility.writeFile(filePath+"P"+i, message.toString());
 
 	}
+
+	
+	public static ArrayList<String> PlayerTurn( String filePath) throws InterruptedException {
+		
+		//for player selection to start with
+				Random random = new Random();
+				
+				ArrayList<String> playerList = new ArrayList<String> ();
+				ArrayList<String> playerSeq = new ArrayList<String> ();
+				playerList .add("P1");
+				playerList.add("P2");
+				playerList.add("P3");
+				Collections.shuffle(playerList);
+				playerSeq = playerList;
+				System.out.println("Play Order- "+ playerSeq);
+		
+		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
+		message.append(playerSeq.get(0));
+		Utility.writeFile(filePath, message.toString());
+		return playerSeq;
+	}
+	
+	//message 15
+	public static void pass(String messageNumber, List<String> messageDetailsList) {
+		// TODO Auto-generated method stub
+		System.out.println("Player has passed the turn");
+		Main.passCount ++;
+	}
+
+	public static void addForCard(String messageNumber, List<String> messageDetailsList) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < messageDetailsList.size(); i++) {
+			
+			CardsPlayedByPlayerInfo.add(messageDetailsList.get(i));
+			
+		}
+	}
+
+	//message 12
+	//message 13 Eg : 13: P1; [A, ES, R, NO, Y, MO, B]; [ES.B]
+
+	public static void SupporterDraw(String messageNumber, List<String> messageDetailsList,String playernam) throws InterruptedException {
+	
+		//report round status to all players
+		StringBuilder message = new StringBuilder(Constant.MESSAAGE_13).append(":");
+		
+		message.append(playernam).append(Constant.SEMICOLLEN);
+		
+		for (int i = 0; i < CardsPlayedByPlayerInfo.size(); i++) {
+			
+			if(i == 0)
+				message.append( CardsPlayedByPlayerInfo.get(i) );
+			message.append(Constant.COMMA).append( CardsPlayedByPlayerInfo.get(i) );
+			 
+		}
+		
+		message.append(Constant.SEMICOLLEN);
+	    for (int i = 0; i < messageDetailsList.size(); i++) {
+			
+	    		if(i == 0)
+				message.append( CardsPlayedByPlayerInfo.get(i) );
+			message.append(Constant.COMMA).append( CardsPlayedByPlayerInfo.get(i) );			 
+		}
+	    
+	    for(int i = 1 ; i <= 3 ; i ++)
+	    		Utility.writeFile(Utility.getInstance().getFileWritePath()+"P"+i , message.toString());	   	
+	   		CardsPlayedByPlayerInfo.clear();
+	}
+
+	public static void powerStruggle() {
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+	public static void winnerMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
 
 }

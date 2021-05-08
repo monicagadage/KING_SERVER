@@ -2,16 +2,21 @@ package com.KingIsDdServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
 	public static Boolean ExitGame = false;
 
+
+	public static int passCount;
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		String readFile = "/tmp/From";
 		String writeFile = "/tmp/To";
-
+		Utility.getInstance().setFileWritePath(writeFile);
+		Utility.getInstance().setReadfilepath(readFile);
+		
 		for (int i = 1; i <= 3; i++) {
 
 			String playerName = "P" + i;
@@ -46,6 +51,31 @@ public class Main {
 
 		System.out.println("All messages processed.");
 		//Utility.readAllFile(ExitGame, readFile, writeFile);
+		
+		System.out.println("Selecting player to start with!!");
+		
+    	
+		
+		ArrayList<String> playerSeq = GameProcessing.PlayerTurn(writeFile);
+		Boolean canBreak = false;
+		
+		for(int i = 1 ; i<=8 ; i ++) {
+		passCount = 0;
+		Utility.readFile(readFile, canBreak, playerSeq.get(0));
+		if(canBreak.equals(true)) {
+			canBreak = false;
+			Utility.readFile(readFile, canBreak, playerSeq.get(1));
+		}
+		if(canBreak.equals(true)) {
+			canBreak = false;
+			Utility.readFile(readFile, canBreak, playerSeq.get(2));
+		}
+		if(passCount == 3)
+			GameProcessing.powerStruggle();
+		}
+		
+		GameProcessing.winnerMessage();
+	
 	}
 
 }

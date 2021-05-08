@@ -2,6 +2,7 @@ package com.KingIsDdServer;
 
 import static java.nio.file.StandardOpenOption.WRITE;
 
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +15,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Utility {
+
+	private String writefilepath;
+	private String readfilepath;
+	private static volatile Utility Utility = null;
+
+	Utility() {
+		// private constructor
+	}
+
+	// singleton object creation
+	public static Utility getInstance() {
+		if (Utility == null) {
+			synchronized (Utility.class) {
+				if (Utility == null) {
+					Utility = new Utility();
+				}
+			}
+		}
+		return Utility;
+	}
+
+	public String getFileWritePath() {
+		return writefilepath;
+	}
+
+	public void setFileWritePath(String fileWritePath) {
+		this.writefilepath = fileWritePath;
+	}
 
 	public static void writeFile(String filePath, String message) {
 		try {
@@ -33,7 +63,8 @@ public class Utility {
 	public static void readFile(String filename, boolean canBreak, String playerName) throws InterruptedException, IOException {
 		String line;
 		try {
-			LineNumberReader lnr =new LineNumberReader(new FileReader(filename));
+			String fileName = filename + playerName;
+			LineNumberReader lnr =new LineNumberReader(new FileReader(fileName));
 			while (!canBreak) {
 				line = lnr.readLine();
 				if (line == null || line.isEmpty()) {				
@@ -56,9 +87,27 @@ public class Utility {
 		String[] messageArray = message.split(":");
 		String[] messageDetails = messageArray[1].split(",");
 		String messageNumber = messageArray[0];
+		
 		List<String> messageDetailsList = new ArrayList<>(Arrays.asList(messageDetails));
 		
-		return false;
+		if ("15".equals(messageNumber))
+			GameProcessing.pass(messageNumber, messageDetailsList);
+		else if("07".equals(messageNumber) || "08".equals(messageNumber) || "09".equals(messageNumber) || "10".equals(messageNumber) || "11".equals(messageNumber))
+			GameProcessing.addForCard(messageNumber, messageDetailsList);
+		else if("12".equals(messageNumber)) {
+			GameProcessing.SupporterDraw (messageNumber, messageDetailsList,playerName);
+			
+			
+			
+		}
+		return true;
+	}
 
+	public String getReadfilepath() {
+		return readfilepath;
+	}
+
+	public void setReadfilepath(String readfilepath) {
+		this.readfilepath = readfilepath;
 	}
 }
