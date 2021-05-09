@@ -13,8 +13,8 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		String readFile = "From";
-		String writeFile = "To";
+		String readFile = "/tmp/From";
+		String writeFile = "/tmp/To";
 		Utility.getInstance().setFileWritePath(writeFile);
 		Utility.getInstance().setReadfilepath(readFile);
 		
