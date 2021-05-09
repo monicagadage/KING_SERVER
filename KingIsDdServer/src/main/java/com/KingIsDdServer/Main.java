@@ -6,16 +6,28 @@ import java.util.ArrayList;
 
 public class Main {
 
-	public static Boolean ExitGame = false;
+	public static Boolean ExitGame;
 
 
 	public static int passCount;
+	
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		String readFile = "/tmp/From";
 		String writeFile = "/tmp/To";
 		Utility.getInstance().setFileWritePath(writeFile);
 		Utility.getInstance().setReadfilepath(readFile);
+		
+		GameParameter.getInstance().setRedFollower(18);
+		GameParameter.getInstance().setBlueFollower(18);
+		GameParameter.getInstance().setYellowFollower(18);
+	
+		GameParameter.getInstance().setRedControlDisk(8);
+		GameParameter.getInstance().setBlueControlDisk(8);
+		GameParameter.getInstance().setYellowControlDisk(8);
+		
+		GameParameter.getInstance().setBlackDisk(3);
+		
 		
 		for (int i = 1; i <= 3; i++) {
 
@@ -59,23 +71,28 @@ public class Main {
 		ArrayList<String> playerSeq = GameProcessing.PlayerTurn(writeFile);
 		Boolean canBreak = false;
 		
-		for(int i = 1 ; i<=8 ; i ++) {
-		passCount = 0;
-		Utility.readFile(readFile, canBreak, playerSeq.get(0));
-		if(canBreak.equals(true)) {
-			canBreak = false;
-			Utility.readFile(readFile, canBreak, playerSeq.get(1));
-		}
-		if(canBreak.equals(true)) {
-			canBreak = false;
-			Utility.readFile(readFile, canBreak, playerSeq.get(2));
-		}
-		if(passCount == 3)
-			GameProcessing.powerStruggle();
-		}
+		String result = "C";
+		ExitGame = false;
+		while(ExitGame = false) {
+			for(int i = 1 ; i<=8 ; i ++) {
+			passCount = 0;
+				while(passCount < 3) {
+					Utility.readFile(readFile, canBreak, playerSeq.get(0));
+					
+					if(canBreak.equals(true)) {
+						canBreak = false;
+						Utility.readFile(readFile, canBreak, playerSeq.get(1));
+					}
+					
+					if(canBreak.equals(true)) {
+						canBreak = false;
+						Utility.readFile(readFile, canBreak, playerSeq.get(2));
+					}
+				}
+				GameProcessing.powerStruggle();
 		
-		GameProcessing.winnerMessage();
-	
+			}
+			GameProcessing.winnerMessage(result);
+		}
 	}
-
 }
