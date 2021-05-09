@@ -87,21 +87,17 @@ public class Main {
 					System.out.println("Player " + playerSeq.get(0) + "Turn");
 					Utility.readFile(readFile, canBreak, playerSeq.get(0));
 					
-					
-					
-					if(canBreak.equals(true)) {
+			
 						canBreak = false;
 						playerTurn(playerSeq.get(1));
 						System.out.println("Player " + playerSeq.get(1) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(1));
-					}
 					
-					if(canBreak.equals(true)) {
 						canBreak = false;
 						playerTurn(playerSeq.get(2));
 						System.out.println("Player " + playerSeq.get(2) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(2));
-					}
+					
 				}
 				GameProcessing.powerStruggle();
 		

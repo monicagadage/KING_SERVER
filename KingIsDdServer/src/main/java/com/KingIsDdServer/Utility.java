@@ -87,7 +87,7 @@ public class Utility {
 		String[] messageArray = message.split(":");
 		String[] messageDetails = messageArray[1].split(",");
 		String messageNumber = messageArray[0];
-		
+		System.out.println(" out messageNumber");
 		List<String> messageDetailsList = new ArrayList<>(Arrays.asList(messageDetails));
 		
 		if ("15".equals(messageNumber)) {
@@ -96,6 +96,7 @@ public class Utility {
 		}
 		else if("07".equals(messageNumber) || "08".equals(messageNumber) || "09".equals(messageNumber) || "10".equals(messageNumber) || "11".equals(messageNumber)) {
 			GameProcessing.addForCard(messageNumber, messageDetailsList);
+			System.out.println("in messageNumber");
 			return false;
 		}
 		else if("12".equals(messageNumber)) {
