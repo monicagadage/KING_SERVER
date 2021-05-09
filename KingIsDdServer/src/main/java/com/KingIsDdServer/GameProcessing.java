@@ -195,7 +195,7 @@ public class GameProcessing {
 	}
 
 	
-	public static ArrayList<String> PlayerTurn( String filePath) throws InterruptedException {
+	public static ArrayList<String> PlayerTurn() throws InterruptedException {
 		
 		//for player selection to start with
 				
@@ -207,11 +207,6 @@ public class GameProcessing {
 				Collections.shuffle(playerList);
 				playerSeq = playerList;
 				System.out.println("Play Order- "+ playerSeq);
-		
-		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
-		message.append(playerSeq.get(0));
-		for(int i = 1 ; i <= 3 ; i ++)
-			Utility.writeFile(filePath + "P"+i , message.toString());
 		
 		return playerSeq;
 	}
@@ -240,7 +235,7 @@ public class GameProcessing {
 		//report round status to all players
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_13).append(":");
 		
-		message.append(playerNam).append(Constant.SEMICOLLEN);
+		message.append(playerNam).append(Constant.COMMA);
 		
 		for (int i = 0; i < CardsPlayedByPlayerInfo.size(); i++) {
 			
@@ -262,7 +257,7 @@ public class GameProcessing {
 			 
 		}
 		
-		message.append(Constant.SEMICOLLEN);
+		message.append(Constant.COMMA);
 		playerFollower(messageDetailsList , playerNam);
 	    for (int i = 0; i < messageDetailsList.size(); i++) {
 			

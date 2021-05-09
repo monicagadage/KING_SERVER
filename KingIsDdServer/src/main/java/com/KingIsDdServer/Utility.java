@@ -90,17 +90,21 @@ public class Utility {
 		
 		List<String> messageDetailsList = new ArrayList<>(Arrays.asList(messageDetails));
 		
-		if ("15".equals(messageNumber))
+		if ("15".equals(messageNumber)) {
 			GameProcessing.pass(messageNumber, messageDetailsList);
-		else if("07".equals(messageNumber) || "08".equals(messageNumber) || "09".equals(messageNumber) || "10".equals(messageNumber) || "11".equals(messageNumber))
+			return true;
+		}
+		else if("07".equals(messageNumber) || "08".equals(messageNumber) || "09".equals(messageNumber) || "10".equals(messageNumber) || "11".equals(messageNumber)) {
 			GameProcessing.addForCard(messageNumber, messageDetailsList);
+			return false;
+		}
 		else if("12".equals(messageNumber)) {
 			GameProcessing.SupporterDraw (messageNumber, messageDetailsList,playerName);
-			
-			
-			
+			return true;
 		}
-		return true;
+		else 
+			return false;
+			
 	}
 
 	public String getReadfilepath() {

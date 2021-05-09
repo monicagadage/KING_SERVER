@@ -13,8 +13,8 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		String readFile = "/tmp/From";
-		String writeFile = "/tmp/To";
+		String readFile = "From";
+		String writeFile = "To";
 		Utility.getInstance().setFileWritePath(writeFile);
 		Utility.getInstance().setReadfilepath(readFile);
 		
@@ -50,6 +50,7 @@ public class Main {
 
 			Runtime.getRuntime().exec(new String[] { "mkfifo", "-m", "777", readFileName.toPath().toString() });
 			Runtime.getRuntime().exec(new String[] { "mkfifo", "-m", "777", writeFileName.toPath().toString() });
+			
 
 		}
 
@@ -68,8 +69,8 @@ public class Main {
 		
     	
 		
-		ArrayList<String> playerSeq = GameProcessing.PlayerTurn(writeFile);
-		Boolean canBreak = false;
+		ArrayList<String> playerSeq = GameProcessing.PlayerTurn();
+		
 		
 		String result = "C";
 		ExitGame = false;
@@ -80,15 +81,25 @@ public class Main {
 			for(int i = 1 ; i<=8 ; i ++) {
 			passCount = 0;
 				while(passCount < 3) {
+					
+					Boolean canBreak = false;
+					playerTurn(playerSeq.get(0));
+					System.out.println("Player " + playerSeq.get(0) + "Turn");
 					Utility.readFile(readFile, canBreak, playerSeq.get(0));
+					
+					
 					
 					if(canBreak.equals(true)) {
 						canBreak = false;
+						playerTurn(playerSeq.get(1));
+						System.out.println("Player " + playerSeq.get(1) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(1));
 					}
 					
 					if(canBreak.equals(true)) {
 						canBreak = false;
+						playerTurn(playerSeq.get(2));
+						System.out.println("Player " + playerSeq.get(2) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(2));
 					}
 				}
@@ -97,5 +108,14 @@ public class Main {
 			}
 			GameProcessing.winnerMessage(result);
 		}
+	}
+
+	private static void playerTurn(String playerName) {
+		// TODO Auto-generated method stub
+		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
+		message.append(playerName);
+		for(int i = 1 ; i <= 3 ; i ++)
+			Utility.writeFile(Utility.getInstance().getFileWritePath() + "P"+i , message.toString());
+		
 	}
 }
