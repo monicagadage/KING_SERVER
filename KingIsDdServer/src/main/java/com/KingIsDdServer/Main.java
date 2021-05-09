@@ -73,7 +73,10 @@ public class Main {
 		
 		String result = "C";
 		ExitGame = false;
-		while(ExitGame = false) {
+		System.out.println("after");
+		
+		while(ExitGame == false) {
+		
 			for(int i = 1 ; i<=8 ; i ++) {
 			passCount = 0;
 				while(passCount < 3) {
