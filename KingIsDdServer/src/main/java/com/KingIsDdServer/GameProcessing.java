@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+
 public class GameProcessing {
 	public static ArrayList<String> CardsPlayedByPlayerInfo = new ArrayList<String>();
 
@@ -43,24 +44,20 @@ public class GameProcessing {
 		locationFollower.put(Constant.MORAY_CHAR, countFollower);
 		blueFollower = GameParameter.getInstance().getBlueFollower();
 		GameParameter.getInstance().setBlueFollower((blueFollower - 4));
-		countFollower.clear();
 		
-		countFollower.put("B", 0);
-		countFollower.put("R", 4);
-		countFollower.put("Y", 0);
+		countFollower.replace("B", 0);
+		countFollower.replace("R", 4);
+		countFollower.replace("Y", 0);
 		locationFollower.put(Constant.GWYNEDD_CHAR, countFollower);
 		redFollower = GameParameter.getInstance().getRedFollower();
 		GameParameter.getInstance().setRedFollower((redFollower - 4));
-		countFollower.clear();
 		
-		countFollower.put("B", 0);
-		countFollower.put("R", 0);
-		countFollower.put("Y", 4);
+		countFollower.replace("B", 0);
+		countFollower.replace("R", 0);
+		countFollower.replace("Y", 4);
 		locationFollower.put(Constant.ESSEX_CHAR, countFollower);
 		yellowFollower = GameParameter.getInstance().getYellowFollower();
 		GameParameter.getInstance().setYellowFollower((yellowFollower - 4));
-		countFollower.clear();
-		
 		
 		ArrayList<String> loca = new ArrayList<String>();
 		loca.add(Constant.STRATHCLYDE_CHAR);
@@ -74,15 +71,15 @@ public class GameProcessing {
 			
 			ArrayList<Integer> follower = produceFollower(4);
 			
-				
+			HashMap<String, Integer> countFollower1 = new HashMap<> ();
+
 				message.append(Constant.COMMA).append(loca.get(i)).append(Constant.COMMA).append(follower.get(0)).append(Constant.COMMA)
 						.append(follower.get(1)).append(Constant.COMMA).append(follower.get(2));
 				
-				countFollower.put("B", follower.get(0));
-				countFollower.put("R", follower.get(1));
-				countFollower.put("Y", follower.get(2));
-				locationFollower.put(loca.get(i), countFollower);
-				countFollower.clear();	
+				countFollower1.put("B", follower.get(0));
+				countFollower1.put("R", follower.get(1));
+				countFollower1.put("Y", follower.get(2));
+				locationFollower.put(loca.get(i), countFollower1);
 			
 		}
 		GameParameter.getInstance().setLocationFollower(locationFollower);
@@ -128,12 +125,12 @@ public class GameProcessing {
 	public static void distributeFoll(String filePath) throws InterruptedException {
 		
 		HashMap<String, HashMap<String, Integer>> playerFollower = new HashMap<String, HashMap<String, Integer>>();
-		 HashMap<String, Integer> follower = new HashMap<>();
+		 
 		
 
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_03).append(":");
 		for (int i = 1; i <= 3; i++) {
-			
+			HashMap<String, Integer> follower = new HashMap<>();
 			ArrayList<Integer> follower1 = produceFollower(3);
 				
 				String playerName = "P" + i;
@@ -148,11 +145,10 @@ public class GameProcessing {
 				follower.put("R", follower1.get(1));
 				follower.put("Y", follower1.get(2));
 				playerFollower.put(playerName, follower);
-				follower.clear();
-			
 		}
 		
 		GameParameter.getInstance().setFollower(playerFollower);
+
 	
 		System.out.println("03 Message " + message.toString());
 		for (int i=1;i<=3;i++) {
