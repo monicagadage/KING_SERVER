@@ -53,7 +53,7 @@ public class Main {
 			
 
 		}
-
+		
 		System.out.println("fisrt");
 		GameProcessing.initializeFile(writeFile);
 

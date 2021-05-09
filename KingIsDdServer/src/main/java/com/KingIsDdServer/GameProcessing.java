@@ -224,7 +224,9 @@ public class GameProcessing {
 			
 			CardsPlayedByPlayerInfo.add(messageDetailsList.get(i));
 			
+			
 		}
+		System.out.println(CardsPlayedByPlayerInfo);
 	}
 
 	//message 12
@@ -237,18 +239,19 @@ public class GameProcessing {
 		
 		message.append(playerNam).append(Constant.COMMA);
 		
+		if(CardsPlayedByPlayerInfo.get(0).equals("S"))
+			SWEcarsProcess(playerNam);
+		if(CardsPlayedByPlayerInfo.get(0).equals("A"))
+			AssembleCardProcess(playerNam);
+		if(CardsPlayedByPlayerInfo.get(0).equals("M"))
+			ManoeuvreCardProcess(playerNam);
+		if(CardsPlayedByPlayerInfo.get(0).equals("O"))
+			OutManoeuvreCardProcess(playerNam);
+		if(CardsPlayedByPlayerInfo.get(0).equals("N"))
+			NegotiateCardProcess(playerNam);
+		
+		System.out.println(CardsPlayedByPlayerInfo + "CardsPlayedByPlayerInfo");
 		for (int i = 0; i < CardsPlayedByPlayerInfo.size(); i++) {
-			
-			if(CardsPlayedByPlayerInfo.get(0).equals("S"))
-				SWEcarsProcess(playerNam);
-			if(CardsPlayedByPlayerInfo.get(0).equals("A"))
-				AssembleCardProcess(playerNam);
-			if(CardsPlayedByPlayerInfo.get(0).equals("M"))
-				ManoeuvreCardProcess(playerNam);
-			if(CardsPlayedByPlayerInfo.get(0).equals("O"))
-				OutManoeuvreCardProcess(playerNam);
-			if(CardsPlayedByPlayerInfo.get(0).equals("N"))
-				NegotiateCardProcess(playerNam);
 			
 			if(i == 0)
 				message.append( CardsPlayedByPlayerInfo.get(i) );
@@ -267,6 +270,7 @@ public class GameProcessing {
 			message.append(Constant.COMMA).append( messageDetailsList.get(i) );			 
 		}
 	    
+	    System.out.println("13 Message " + message.toString());
 	    for(int i = 1 ; i <= 3 ; i ++)
 	    		Utility.writeFile(Utility.getInstance().getFileWritePath()+"P"+i , message.toString());	   	
 	   	

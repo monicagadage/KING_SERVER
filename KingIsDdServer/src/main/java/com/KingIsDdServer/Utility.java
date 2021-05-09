@@ -48,6 +48,7 @@ public class Utility {
 
 	public static void writeFile(String filePath, String message) {
 		try {
+			System.out.println("in write file");
 			message= message+"\n";
 			Path path = Paths.get(filePath);
 			OutputStream outputStream = Files.newOutputStream(path, WRITE);
@@ -83,11 +84,10 @@ public class Utility {
 	}
 	
 	public static Boolean parseMessage(String message,String playerName) throws InterruptedException {
-
 		String[] messageArray = message.split(":");
 		String[] messageDetails = messageArray[1].split(",");
 		String messageNumber = messageArray[0];
-		System.out.println(" out messageNumber");
+		System.out.println(" out messageNumber" + messageNumber);
 		List<String> messageDetailsList = new ArrayList<>(Arrays.asList(messageDetails));
 		
 		if ("15".equals(messageNumber)) {
@@ -100,7 +100,8 @@ public class Utility {
 			return false;
 		}
 		else if("12".equals(messageNumber)) {
-			GameProcessing.SupporterDraw (messageNumber, messageDetailsList,playerName);
+			System.out.println(messageDetailsList);			
+			GameProcessing.SupporterDraw(messageNumber, messageDetailsList,playerName);
 			return true;
 		}
 		else 
