@@ -21,7 +21,7 @@ public class GameProcessing {
 
 	public static void initializeFile(String filePath) throws InterruptedException {
 
-		Random random = new Random();
+		
 		int redFollower;
 		int blueFollower;
 		int yellowFollower;
@@ -69,30 +69,20 @@ public class GameProcessing {
 		loca.add(Constant.WARWICK_CHAR);
 		loca.add(Constant.DEVON_CHAR);
 
+		
 		for (int i = 0; i < 5; i++) {
-
-			int blue = random.nextInt(4);
-			int red = random.nextInt(4 - blue);
-			int yellow = 4 - blue - red;
-			int blueSupply = GameParameter.getInstance().getBlueFollower() - blue;
-			int redSupply = GameParameter.getInstance().getRedFollower() - red;
-			int yellowSupply = GameParameter.getInstance().getYellowFollower() - yellow;
 			
-			if(blueSupply >= 0 && redSupply >= 0 && yellowSupply >= 0) {
+			ArrayList<Integer> follower = produceFollower(4);
+			
 				
-				GameParameter.getInstance().setBlueFollower( blueSupply );
-				GameParameter.getInstance().setRedFollower( redSupply );
-				GameParameter.getInstance().setYellowFollower( yellowSupply );
+				message.append(Constant.COMMA).append(loca.get(i)).append(Constant.COMMA).append(follower.get(0)).append(Constant.COMMA)
+						.append(follower.get(1)).append(Constant.COMMA).append(follower.get(2));
 				
-				message.append(Constant.COMMA).append(loca.get(i)).append(Constant.COMMA).append(blue).append(Constant.COMMA)
-						.append(red).append(Constant.COMMA).append(yellow);
-				
-				countFollower.put("B", blue);
-				countFollower.put("R", red);
-				countFollower.put("Y", yellow);
+				countFollower.put("B", follower.get(0));
+				countFollower.put("R", follower.get(1));
+				countFollower.put("Y", follower.get(2));
 				locationFollower.put(loca.get(i), countFollower);
-				countFollower.clear();
-			}
+				countFollower.clear();	
 			
 		}
 		GameParameter.getInstance().setLocationFollower(locationFollower);
@@ -102,49 +92,64 @@ public class GameProcessing {
 
 	}
 
+	private static ArrayList<Integer> produceFollower( int number) {
+		// TODO Auto-generated method stub
+		ArrayList<Integer> follower = new ArrayList<>(); 
+		Random random = new Random();
+		
+		int blueSupply = -1;
+		int redSupply = -1;
+		int yellowSupply = -1;
+		int blue = 0;
+		int red = 0;
+		int yellow = 0;
+		
+		while(blueSupply < 0 || redSupply < 0 || yellowSupply < 0) {
+			blue = random.nextInt(number);
+			red = random.nextInt(number - blue);
+			yellow = number - blue - red;
+			
+			blueSupply = GameParameter.getInstance().getBlueFollower() - blue;
+			redSupply = GameParameter.getInstance().getRedFollower() - red;
+			yellowSupply = GameParameter.getInstance().getYellowFollower() - yellow;
+		}
+		
+			follower.add(blue);
+			follower.add(red);
+			follower.add(yellow);
+			GameParameter.getInstance().setBlueFollower( blueSupply );
+			GameParameter.getInstance().setRedFollower( redSupply );
+			GameParameter.getInstance().setYellowFollower( yellowSupply );
+		
+		return follower;
+	}
+
 	// 03 message
 	public static void distributeFoll(String filePath) throws InterruptedException {
-		Random random = new Random();
+		
 		HashMap<String, HashMap<String, Integer>> playerFollower = new HashMap<String, HashMap<String, Integer>>();
 		 HashMap<String, Integer> follower = new HashMap<>();
-		int blue = -1;
-		int red = -1;
-		int yellow = -1;
+		
 
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_03).append(":");
 		for (int i = 1; i <= 3; i++) {
 			
-			while(blue < 0 && red < 0 && yellow < 0) {
-				blue = random.nextInt(3);
-				red = random.nextInt(3 - blue);
-				yellow = 3 - blue - red;
-				
-				blue = GameParameter.getInstance().getBlueFollower() - blue;
-				red = GameParameter.getInstance().getRedFollower() - red;
-				yellow = GameParameter.getInstance().getYellowFollower() - yellow;
-			}
-				
-				GameParameter.getInstance().setBlueFollower( blue );
-				GameParameter.getInstance().setRedFollower( red );
-				GameParameter.getInstance().setYellowFollower( yellow );
+			ArrayList<Integer> follower1 = produceFollower(3);
 				
 				String playerName = "P" + i;
 				if (i < 3)
-					message.append(playerName).append(Constant.COMMA).append(blue).append(Constant.COMMA).append(red)
-							.append(Constant.COMMA).append(yellow).append(Constant.COMMA);
+					message.append(playerName).append(Constant.COMMA).append(follower1.get(0)).append(Constant.COMMA).append(follower1.get(1))
+							.append(Constant.COMMA).append(follower1.get(2)).append(Constant.COMMA);
 				else
-					message.append(playerName).append(Constant.COMMA).append(blue).append(Constant.COMMA).append(red)
-							.append(Constant.COMMA).append(yellow);
+					message.append(playerName).append(Constant.COMMA).append(follower1.get(0)).append(Constant.COMMA).append(follower1.get(1))
+							.append(Constant.COMMA).append(follower1.get(2));
 				
-				follower.put("B", blue);
-				follower.put("R", red);
-				follower.put("Y", yellow);
-				playerFollower.put("P1", follower);
+				follower.put("B", follower1.get(0));
+				follower.put("R", follower1.get(1));
+				follower.put("Y", follower1.get(2));
+				playerFollower.put(playerName, follower);
 				follower.clear();
 			
-			blue = -1;
-			red = -1;
-			yellow = -1;	
 		}
 		
 		GameParameter.getInstance().setFollower(playerFollower);
