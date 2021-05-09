@@ -83,6 +83,7 @@ public class GameProcessing {
 			
 		}
 		GameParameter.getInstance().setLocationFollower(locationFollower);
+		System.out.println(GameParameter.getInstance().getLocationFollower().get("NO"));
 		System.out.println("02 Message " + message.toString());
 		for (int i=1;i<=3;i++)
 			Utility.writeFile(filePath+"P"+i, message.toString());
@@ -293,7 +294,8 @@ public class GameProcessing {
 		// TODO Auto-generated method stub
 		String location = messageDetailsList.get(0);
 		String follower = messageDetailsList.get(1);
-		
+		System.out.println(location);
+		System.out.println(follower);
 		int noFollower = GameParameter.getInstance().getFollower().get(playerNam).get(follower);
 		GameParameter.getInstance().getFollower().get(playerNam).replace(follower, noFollower + 1);
 		
