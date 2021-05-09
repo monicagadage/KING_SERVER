@@ -220,6 +220,17 @@ public class GameProcessing {
 
 	public static void addForCard(String messageNumber, List<String> messageDetailsList) {
 		// TODO Auto-generated method stub
+		if("07".equals(messageNumber)) 
+			CardsPlayedByPlayerInfo.add("S");
+		else if("08".equals(messageNumber)) 
+			CardsPlayedByPlayerInfo.add("A");
+		else if("09".equals(messageNumber)) 
+			CardsPlayedByPlayerInfo.add("M");
+		else if("10".equals(messageNumber)) 
+			CardsPlayedByPlayerInfo.add("O");
+		else if("11".equals(messageNumber)) 
+			CardsPlayedByPlayerInfo.add("N");
+		
 		for (int i = 0; i < messageDetailsList.size(); i++) {
 			
 			CardsPlayedByPlayerInfo.add(messageDetailsList.get(i));
@@ -255,7 +266,7 @@ public class GameProcessing {
 			
 			if(i == 0)
 				message.append( CardsPlayedByPlayerInfo.get(i) );
-			
+			else
 			message.append(Constant.COMMA).append( CardsPlayedByPlayerInfo.get(i) );
 			 
 		}
@@ -266,7 +277,7 @@ public class GameProcessing {
 			
 	    		if(i == 0)
 				message.append( messageDetailsList.get(i) );
-	    		
+	    		else
 			message.append(Constant.COMMA).append( messageDetailsList.get(i) );			 
 		}
 	    
