@@ -286,7 +286,6 @@ public class GameProcessing {
 	    for(int i = 1 ; i <= 3 ; i ++)
 	    		Utility.writeFile(Utility.getInstance().getFileWritePath()+"P"+i , message.toString());	   	
 	   	
-	    CardsPlayedByPlayerInfo.clear();
 	}
 
 	
