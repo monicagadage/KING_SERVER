@@ -271,6 +271,7 @@ public class GameProcessing {
 			message.append(Constant.COMMA).append( CardsPlayedByPlayerInfo.get(i) );
 			 
 		}
+		CardsPlayedByPlayerInfo.clear();
 		
 		message.append(Constant.COMMA);
 		playerFollower(messageDetailsList , playerNam);
@@ -309,13 +310,23 @@ public class GameProcessing {
 		
 		if (CardsPlayedByPlayerInfo.get(1).equals("S")) {
 			
+			//add the condition for handling if there is only one follower left
 			int blueFollower = GameParameter.getInstance().getBlueFollower() - 2;
+			if(blueFollower >= 0) {
 			GameParameter.getInstance().setBlueFollower(blueFollower);
 			HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
 			int blue = locationFollower.get("B"); 
 			locationFollower.replace("B", blue+2);
 			GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
-			
+			}
+			else if ( blueFollower == -1) {
+				
+				GameParameter.getInstance().setBlueFollower(0);
+				HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
+				int blue = locationFollower.get("B"); 
+				locationFollower.replace("B", blue + 1);
+				GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
+			}
 		}
 		
 		if (CardsPlayedByPlayerInfo.get(1).equals("W")) {
@@ -356,38 +367,59 @@ public class GameProcessing {
 	private static void updateLocation(String location, String follower) {
 		// TODO Auto-generated method stub
 		int foll;
-		HashMap<String, Integer> locationFollower ;
+		HashMap<String, Integer> locationFollower = new HashMap<>();
 		
 		locationFollower = GameParameter.getInstance().getLocationFollower().get(location);
-		checkFollower(follower);
-		foll = locationFollower.get(follower) + 1;
-		locationFollower.replace(follower, foll);
-		GameParameter.getInstance().getLocationFollower().replace(location, locationFollower);
-		
-		locationFollower.clear();
+		Boolean result = checkFollower(follower);
+		if (result) {
+			foll = locationFollower.get(follower) + 1;
+			locationFollower.replace(follower, foll);
+			GameParameter.getInstance().getLocationFollower().replace(location, locationFollower);
+		}
 		
 		
 	}
 
-	private static void checkFollower(String follower) {
+	private static boolean checkFollower(String follower) {
 		// TODO Auto-generated method stub
+		
+		
 		if (follower.equals("R")) {
-			GameParameter.getInstance().setRedFollower( GameParameter.getInstance().getRedFollower() -1 );
+			//add for all should not substract if we get a 0
+			if(GameParameter.getInstance().getRedFollower() > 0) {
+				GameParameter.getInstance().setRedFollower( GameParameter.getInstance().getRedFollower() - 1 );
+				return true;
+			}
 		}
 		if (follower.equals("B")) {
-			GameParameter.getInstance().setBlueFollower( GameParameter.getInstance().getBlueFollower() -1 );	
+			
+			GameParameter.getInstance().setBlueFollower( GameParameter.getInstance().getBlueFollower() - 1 );	
 		}
 		if (follower.equals("Y")) {
-			GameParameter.getInstance().setYellowFollower( GameParameter.getInstance().getYellowFollower() -1 );
+			
+			GameParameter.getInstance().setYellowFollower( GameParameter.getInstance().getYellowFollower() - 1 );
 		}
+		return false;
 	}
 
 	//message 9 ES, R, NO, Y
 	
 	public static void ManoeuvreCardProcess(String playerNam) {
 		
-		updateLocation(CardsPlayedByPlayerInfo.get(1) , CardsPlayedByPlayerInfo.get(2));
-		updateLocation(CardsPlayedByPlayerInfo.get(3) , CardsPlayedByPlayerInfo.get(4));
+		//swap the follower change this
+		
+		String region1 = CardsPlayedByPlayerInfo.get(1);
+		String follower1 = CardsPlayedByPlayerInfo.get(2);
+		String region2 = CardsPlayedByPlayerInfo.get(1);
+		String follower2 = CardsPlayedByPlayerInfo.get(2);
+		
+		int count = GameParameter.getInstance().getLocationFollower().get(region1).get(follower1);
+		
+		if (count >= 1) {
+			
+			
+		}
+		
 		
 	}
  
@@ -409,12 +441,13 @@ public class GameProcessing {
 
 	public static void NegotiateCardProcess(String playerNam) {
 		// TODO Auto-generated method stub
-		
+		// check once
 		int index = GameParameter.getInstance().getInitializeloca().indexOf(CardsPlayedByPlayerInfo.get(1));
 		int index2 = GameParameter.getInstance().getInitializeloca().indexOf(CardsPlayedByPlayerInfo.get(2));
 		
-		GameParameter.getInstance().getInitializeloca().set(index, CardsPlayedByPlayerInfo.get(1));
-		GameParameter.getInstance().getInitializeloca().set(index2, CardsPlayedByPlayerInfo.get(2));
+		//swapping variable is needed
+		GameParameter.getInstance().getInitializeloca().set(index2, CardsPlayedByPlayerInfo.get(1));
+		GameParameter.getInstance().getInitializeloca().set(index, CardsPlayedByPlayerInfo.get(2));
 	}
 	
 	
@@ -423,7 +456,7 @@ public class GameProcessing {
 			String location = GameParameter.getInstance().getInitializeloca().get(0);
 			HashMap<String, Integer> locationFollower =   GameParameter.getInstance().getLocationFollower().get(location);
 			HashMap<String, String> powerStruggle = new HashMap<>();
-			String result = "F";
+			
 			if (GameParameter.getInstance().getPowerStruggle() != null)
 				powerStruggle = GameParameter.getInstance().getPowerStruggle();
 			
@@ -431,14 +464,15 @@ public class GameProcessing {
 			int redFoll = locationFollower.get("R");
 			int yollowFoll = locationFollower.get("Y");
 			
-			if(blueFoll == redFoll || blueFoll == yollowFoll || redFoll == yollowFoll ) {
+			//french location 
+			if(blueFoll == redFoll || blueFoll ==  yollowFoll || redFoll == yollowFoll ) {
 				if (GameParameter.getInstance().getBlackDisk() > 0)
 				{
 					GameParameter.getInstance().setBlackDisk(GameParameter.getInstance().getBlackDisk() - 1);
 						powerStruggle.put(location, "F");
-				}
-				else {
-					winnerMessage(result);
+						
+					if(GameParameter.getInstance().getBlackDisk() == 0)
+						winnerMessage("F");
 				}
 			}
 				

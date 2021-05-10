@@ -73,12 +73,14 @@ public class Main {
 		
 		
 		String result = "C";
+		//need to check exit logic
 		ExitGame = false;
 		System.out.println("after");
 		
 		while(ExitGame == false) {
 		
 			for(int i = 1 ; i<=8 ; i ++) {
+			//need to check pass logic
 			passCount = 0;
 				while(passCount < 3) {
 					
