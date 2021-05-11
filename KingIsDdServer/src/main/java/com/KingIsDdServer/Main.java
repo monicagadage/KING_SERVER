@@ -13,8 +13,8 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		String readFile = "/tmp/From";
-		String writeFile = "/tmp/To";
+		String readFile = "/tmp/allfrom";
+		String writeFile = "/tmp/allto";
 		Utility.getInstance().setFileWritePath(writeFile);
 		Utility.getInstance().setReadfilepath(readFile);
 		HashMap<String, Integer>  followerMap = new HashMap<String, Integer> () ;
