@@ -10,10 +10,9 @@ public class GameParameter {
 	private HashMap<String, HashMap<String, Integer>> locationFollower = new HashMap<> ();
 	private HashMap<String, String>  powerStruggle = new HashMap<String, String> () ;
 	private HashMap<String, HashMap<String, Integer>> Follower = new HashMap<> ();
+	private HashMap<String, Integer>  followerMap = new HashMap<String, Integer> () ;
 	
-	private int redFollower;
-	private int blueFollower;
-	private int yellowFollower;
+	
 	private int redControlDisk;
 	private int blueControlDisk;
 	private int yellowControlDisk;
@@ -44,30 +43,6 @@ public class GameParameter {
 
 	public void setInitializeloca(ArrayList<String> initializeloca) {
 		Initializeloca = initializeloca;
-	}
-
-	public int getRedFollower() {
-		return redFollower;
-	}
-
-	public void setRedFollower(int redFollower) {
-		this.redFollower = redFollower;
-	}
-
-	public int getBlueFollower() {
-		return blueFollower;
-	}
-
-	public void setBlueFollower(int blueFollower) {
-		this.blueFollower = blueFollower;
-	}
-
-	public int getYellowFollower() {
-		return yellowFollower;
-	}
-
-	public void setYellowFollower(int yellowFollower) {
-		this.yellowFollower = yellowFollower;
 	}
 
 	public int getRedControlDisk() {
@@ -132,6 +107,14 @@ public class GameParameter {
 
 	public void setFollower(HashMap<String, HashMap<String, Integer>> follower) {
 		Follower = follower;
+	}
+
+	public HashMap<String, Integer> getFollowerMap() {
+		return followerMap;
+	}
+
+	public void setFollowerMap(HashMap<String, Integer> followerMap) {
+		this.followerMap = followerMap;
 	}
 
 

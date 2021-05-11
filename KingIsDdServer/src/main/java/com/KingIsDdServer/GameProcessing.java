@@ -42,22 +42,22 @@ public class GameProcessing {
 		countFollower.put("R", 0);
 		countFollower.put("Y", 0);
 		locationFollower.put(Constant.MORAY_CHAR, countFollower);
-		blueFollower = GameParameter.getInstance().getBlueFollower();
-		GameParameter.getInstance().setBlueFollower((blueFollower - 4));
+		blueFollower = GameParameter.getInstance().getFollowerMap().get("B");
+		GameParameter.getInstance().getFollowerMap().replace("B", blueFollower-4);
 		
 		countFollower.replace("B", 0);
 		countFollower.replace("R", 4);
 		countFollower.replace("Y", 0);
 		locationFollower.put(Constant.GWYNEDD_CHAR, countFollower);
-		redFollower = GameParameter.getInstance().getRedFollower();
-		GameParameter.getInstance().setRedFollower((redFollower - 4));
+		redFollower = GameParameter.getInstance().getFollowerMap().get("R");
+		GameParameter.getInstance().getFollowerMap().replace("R", redFollower-4);
 		
 		countFollower.replace("B", 0);
 		countFollower.replace("R", 0);
 		countFollower.replace("Y", 4);
 		locationFollower.put(Constant.ESSEX_CHAR, countFollower);
-		yellowFollower = GameParameter.getInstance().getYellowFollower();
-		GameParameter.getInstance().setYellowFollower((yellowFollower - 4));
+		yellowFollower = GameParameter.getInstance().getFollowerMap().get("Y");
+		GameParameter.getInstance().getFollowerMap().replace("Y", yellowFollower-4);
 		
 		ArrayList<String> loca = new ArrayList<String>();
 		loca.add(Constant.STRATHCLYDE_CHAR);
@@ -107,17 +107,18 @@ public class GameProcessing {
 			red = random.nextInt(number - blue);
 			yellow = number - blue - red;
 			
-			blueSupply = GameParameter.getInstance().getBlueFollower() - blue;
-			redSupply = GameParameter.getInstance().getRedFollower() - red;
-			yellowSupply = GameParameter.getInstance().getYellowFollower() - yellow;
+			blueSupply = GameParameter.getInstance().getFollowerMap().get("B") - blue;
+			redSupply = GameParameter.getInstance().getFollowerMap().get("R") - red;
+			yellowSupply = GameParameter.getInstance().getFollowerMap().get("Y") - yellow;
 		}
 		
 			follower.add(blue);
 			follower.add(red);
 			follower.add(yellow);
-			GameParameter.getInstance().setBlueFollower( blueSupply );
-			GameParameter.getInstance().setRedFollower( redSupply );
-			GameParameter.getInstance().setYellowFollower( yellowSupply );
+			GameParameter.getInstance().getFollowerMap().replace("B", blueSupply);
+			GameParameter.getInstance().getFollowerMap().replace("R", redSupply);
+			GameParameter.getInstance().getFollowerMap().replace("Y", yellowSupply);
+
 		
 		return follower;
 	}
@@ -131,21 +132,21 @@ public class GameProcessing {
 
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_03).append(":");
 		for (int i = 1; i <= 3; i++) {
-			HashMap<String, Integer> follower = new HashMap<>();
-			ArrayList<Integer> follower1 = produceFollower(3);
+			HashMap<String, Integer> followerMap = new HashMap<>();
+			ArrayList<Integer> followerList = produceFollower(3);
 				
 				String playerName = "P" + i;
 				if (i < 3)
-					message.append(playerName).append(Constant.COMMA).append(follower1.get(0)).append(Constant.COMMA).append(follower1.get(1))
-							.append(Constant.COMMA).append(follower1.get(2)).append(Constant.COMMA);
+					message.append(playerName).append(Constant.COMMA).append(followerList.get(0)).append(Constant.COMMA).append(followerList.get(1))
+							.append(Constant.COMMA).append(followerList.get(2)).append(Constant.COMMA);
 				else
-					message.append(playerName).append(Constant.COMMA).append(follower1.get(0)).append(Constant.COMMA).append(follower1.get(1))
-							.append(Constant.COMMA).append(follower1.get(2));
+					message.append(playerName).append(Constant.COMMA).append(followerList.get(0)).append(Constant.COMMA).append(followerList.get(1))
+							.append(Constant.COMMA).append(followerList.get(2));
 				
-				follower.put("B", follower1.get(0));
-				follower.put("R", follower1.get(1));
-				follower.put("Y", follower1.get(2));
-				playerFollower.put(playerName, follower);
+				followerMap.put("B", followerList.get(0));
+				followerMap.put("R", followerList.get(1));
+				followerMap.put("Y", followerList.get(2));
+				playerFollower.put(playerName, followerMap);
 		}
 		
 		GameParameter.getInstance().setFollower(playerFollower);
@@ -316,47 +317,43 @@ public class GameProcessing {
 		if (CardsPlayedByPlayerInfo.get(1).equals("S")) {
 			
 			//add the condition for handling if there is only one follower left
-			int blueFollower = GameParameter.getInstance().getBlueFollower() - 2;
-			if(blueFollower >= 0) {
-			GameParameter.getInstance().setBlueFollower(blueFollower);
-			HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
-			int blue = locationFollower.get("B"); 
-			locationFollower.replace("B", blue+2);
-			GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
-			}
-			else if ( blueFollower == -1) {
-				
-				GameParameter.getInstance().setBlueFollower(0);
-				HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
-				int blue = locationFollower.get("B"); 
-				locationFollower.replace("B", blue + 1);
-				GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
-			}
+			
+			addSupporter("B");
+			
 		}
 		
 		if (CardsPlayedByPlayerInfo.get(1).equals("W")) {
 			
-			int redFollower = GameParameter.getInstance().getRedFollower() - 2;
-			GameParameter.getInstance().setRedFollower(redFollower);
-			HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
-			int red = locationFollower.get("R"); 
-			locationFollower.replace("R", red+2);
-			GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
-			
+			addSupporter("R");
 		}
 		
 		if (CardsPlayedByPlayerInfo.get(1).equals("E")) {
 			
-			int yellowFollower = GameParameter.getInstance().getYellowFollower() - 2;
-			GameParameter.getInstance().setYellowFollower(yellowFollower);
-			HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
-			int yellow = locationFollower.get("Y");
-			locationFollower.replace("Y", yellow+2);
-			GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
+			addSupporter("Y");
 			
 		}
 		
 		
+	}
+
+	private static void addSupporter( String follower) {
+		// TODO Auto-generated method stub
+		int followerSupply = GameParameter.getInstance().getFollowerMap().get(follower) - 2;
+		if(followerSupply >= 0) {
+		GameParameter.getInstance().getFollowerMap().replace(follower , followerSupply);
+		HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
+		int locationFoll = locationFollower.get(follower); 
+		locationFollower.replace(follower , locationFoll+2);
+		GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
+		}
+		else if ( followerSupply == -1) {
+			
+			GameParameter.getInstance().getFollowerMap().replace(follower , 0);
+			HashMap<String, Integer> locationFollower = GameParameter.getInstance().getLocationFollower().get(CardsPlayedByPlayerInfo.get(2));
+			int locationFoll = locationFollower.get(follower); 
+			locationFollower.replace(follower, locationFoll + 1);
+			GameParameter.getInstance().getLocationFollower().replace(CardsPlayedByPlayerInfo.get(2), locationFollower);
+		}
 	}
 
 	//message 8: ES, R, NO, Y, MO, B
@@ -387,27 +384,12 @@ public class GameProcessing {
 
 	private static boolean checkFollower(String follower) {
 		// TODO Auto-generated method stub
-		
-		
-		if (follower.equals("R")) {
-			//add for all should not substract if we get a 0
-			if(GameParameter.getInstance().getRedFollower() > 0) {
-				GameParameter.getInstance().setRedFollower( GameParameter.getInstance().getRedFollower() - 1 );
+		//add for all should not substract if we get a 0
+			if(GameParameter.getInstance().getFollowerMap().get(follower) > 0) {
+				int count = GameParameter.getInstance().getFollowerMap().get(follower);
+				GameParameter.getInstance().getFollowerMap().replace(follower, count-1);
 				return true;
 			}
-		}
-		if (follower.equals("B")) {
-			if(GameParameter.getInstance().getRedFollower() > 0) {
-			GameParameter.getInstance().setBlueFollower( GameParameter.getInstance().getBlueFollower() - 1 );
-			return true;
-			}
-		}
-		if (follower.equals("Y")) {
-			if(GameParameter.getInstance().getRedFollower() > 0) {
-			GameParameter.getInstance().setYellowFollower( GameParameter.getInstance().getYellowFollower() - 1 );
-			return true;
-			}
-		}
 		return false;
 	}
 
@@ -417,32 +399,55 @@ public class GameProcessing {
 		
 		//swap the follower change this
 		
-		String region1 = CardsPlayedByPlayerInfo.get(1);
-		String follower1 = CardsPlayedByPlayerInfo.get(2);
-		String region2 = CardsPlayedByPlayerInfo.get(1);
-		String follower2 = CardsPlayedByPlayerInfo.get(2);
+		String region_one = CardsPlayedByPlayerInfo.get(1);
+		String follower_one = CardsPlayedByPlayerInfo.get(2);
+		String region_two = CardsPlayedByPlayerInfo.get(1);
+		String follower_two = CardsPlayedByPlayerInfo.get(2);
 		
-		int count = GameParameter.getInstance().getLocationFollower().get(region1).get(follower1);
+		int count_one = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one);
+		int count_two = GameParameter.getInstance().getLocationFollower().get(region_two).get(follower_two);
 		
-		if (count >= 1) {
+
 			
+			swapfollower(follower_one , region_one , region_one , count_one);
 			
-		}
-		
+			swapfollower(follower_two , region_two , region_one ,  count_two);
+			
+	
 		
 	}
+	
+	
  
-	//message 10 ES, RY, No, B
+	private static void swapfollower(String follower, String region_sub, String region_add, int count) {
+		// TODO Auto-generated method stub
+		if (count >= 1) {
+			GameParameter.getInstance().getLocationFollower().get(region_sub).replace(follower, count - 1 );
+			int tmp = GameParameter.getInstance().getLocationFollower().get(region_add).get(follower);
+			GameParameter.getInstance().getLocationFollower().get(region_add).replace(follower, tmp+1);
+		}
+	}
+
+	//message 10 ES, R,Y, No, B
 	public static void OutManoeuvreCardProcess(String playerNam) {
 		// TODO Auto-generated method stub
+		String region_one = CardsPlayedByPlayerInfo.get(1);
+		String follower_one = CardsPlayedByPlayerInfo.get(2);
+		String follower_one1 = CardsPlayedByPlayerInfo.get(2);
+		String region_two = CardsPlayedByPlayerInfo.get(1);
+		String follower_two = CardsPlayedByPlayerInfo.get(2);
 		
-		char ch1 = CardsPlayedByPlayerInfo.get(2).charAt(0);
-		char ch2 = CardsPlayedByPlayerInfo.get(2).charAt(1);
+		int count_one = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one);
+		int count_one1 = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one1);
+		int count_two = GameParameter.getInstance().getLocationFollower().get(region_two).get(follower_two);
 		
-		updateLocation(CardsPlayedByPlayerInfo.get(1) , Character.toString(ch1));
-		updateLocation(CardsPlayedByPlayerInfo.get(1) , Character.toString(ch2));
-		
-		updateLocation(CardsPlayedByPlayerInfo.get(3) , CardsPlayedByPlayerInfo.get(4));
+			swapfollower(follower_one , region_one , region_two ,  count_one);
+
+			swapfollower(follower_one1 , region_one , region_two ,  count_one1);
+			
+			swapfollower(follower_two , region_two , region_one ,  count_two);
+			
+
 		
 	}
 

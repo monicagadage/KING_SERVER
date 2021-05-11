@@ -3,6 +3,7 @@ package com.KingIsDdServer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -16,10 +17,15 @@ public class Main {
 		String writeFile = "/tmp/To";
 		Utility.getInstance().setFileWritePath(writeFile);
 		Utility.getInstance().setReadfilepath(readFile);
+		HashMap<String, Integer>  followerMap = new HashMap<String, Integer> () ;
+		followerMap.put("B", 18);
+		followerMap.put("R", 18);
+		followerMap.put("Y", 18);
 		
-		GameParameter.getInstance().setRedFollower(18);
-		GameParameter.getInstance().setBlueFollower(18);
-		GameParameter.getInstance().setYellowFollower(18);
+		GameParameter.getInstance().setFollowerMap(followerMap);
+//		GameParameter.getInstance().setRedFollower(18);
+//		GameParameter.getInstance().setBlueFollower(18);
+//		GameParameter.getInstance().setYellowFollower(18);
 	
 		GameParameter.getInstance().setRedControlDisk(8);
 		GameParameter.getInstance().setBlueControlDisk(8);
@@ -115,7 +121,7 @@ public class Main {
 			GameProcessing.winnerMessage(result);
 		}
 	}
-
+}
 	private static void playerTurn(String playerName) {
 		// TODO Auto-generated method stub
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
