@@ -218,6 +218,11 @@ public class GameProcessing {
 		System.out.println("Player has passed the turn");
 		Main.passCount ++;
 	}
+	
+	public static void clearPassCount() {
+		System.out.println("Clearing the pass count");
+		Main.passCount=0;
+	}
 
 	public static void addForCard(String messageNumber, List<String> messageDetailsList) {
 		// TODO Auto-generated method stub
@@ -392,12 +397,16 @@ public class GameProcessing {
 			}
 		}
 		if (follower.equals("B")) {
-			
-			GameParameter.getInstance().setBlueFollower( GameParameter.getInstance().getBlueFollower() - 1 );	
+			if(GameParameter.getInstance().getRedFollower() > 0) {
+			GameParameter.getInstance().setBlueFollower( GameParameter.getInstance().getBlueFollower() - 1 );
+			return true;
+			}
 		}
 		if (follower.equals("Y")) {
-			
+			if(GameParameter.getInstance().getRedFollower() > 0) {
 			GameParameter.getInstance().setYellowFollower( GameParameter.getInstance().getYellowFollower() - 1 );
+			return true;
+			}
 		}
 		return false;
 	}

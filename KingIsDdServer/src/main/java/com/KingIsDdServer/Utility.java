@@ -97,6 +97,7 @@ public class Utility {
 		else if("07".equals(messageNumber) || "08".equals(messageNumber) || "09".equals(messageNumber) || "10".equals(messageNumber) || "11".equals(messageNumber)) {
 			GameProcessing.addForCard(messageNumber, messageDetailsList);
 			System.out.println("in messageNumber");
+			GameProcessing.clearPassCount();
 			return false;
 		}
 		else if("12".equals(messageNumber)) {

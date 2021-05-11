@@ -8,9 +8,8 @@ public class Main {
 
 	public static Boolean ExitGame;
 
-
 	public static int passCount;
-	
+
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		String readFile = "/tmp/From";
@@ -82,24 +81,33 @@ public class Main {
 			for(int i = 1 ; i<=8 ; i ++) {
 			//need to check pass logic
 			passCount = 0;
-				while(passCount < 3) {
+				while(true) {
 					
 					Boolean canBreak = false;
 					playerTurn(playerSeq.get(0));
 					System.out.println("Player " + playerSeq.get(0) + "Turn");
 					Utility.readFile(readFile, canBreak, playerSeq.get(0));
-					
+					 if( Main.checkPassCount()) {
+						 break;
+					 }
 			
 						canBreak = false;
 						playerTurn(playerSeq.get(1));
 						System.out.println("Player " + playerSeq.get(1) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(1));
-					
+
+						 if( Main.checkPassCount()) {
+							 break;
+						 }
+						 
+						 
 						canBreak = false;
 						playerTurn(playerSeq.get(2));
 						System.out.println("Player " + playerSeq.get(2) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(2));
 					
+						 if( Main.checkPassCount()) {
+							 break;
 				}
 				GameProcessing.powerStruggle();
 		
@@ -112,8 +120,15 @@ public class Main {
 		// TODO Auto-generated method stub
 		StringBuilder message = new StringBuilder(Constant.MESSAAGE_06).append(":");
 		message.append(playerName);
-		for(int i = 1 ; i <= 3 ; i ++)
-			Utility.writeFile(Utility.getInstance().getFileWritePath() + "P"+i , message.toString());
-		
+		for (int i = 1; i <= 3; i++)
+			Utility.writeFile(Utility.getInstance().getFileWritePath() + "P" + i, message.toString());
+
+	}
+
+	private static Boolean checkPassCount() {
+		if (Main.passCount >= 3) {
+			return true;
+		}
+		return false;
 	}
 }
