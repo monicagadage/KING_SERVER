@@ -130,16 +130,13 @@ public class GameProcessing {
 		 
 		
 
-		StringBuilder message = new StringBuilder(Constant.MESSAAGE_03).append(":");
 		for (int i = 1; i <= 3; i++) {
+			StringBuilder message = new StringBuilder(Constant.MESSAAGE_03).append(":");
 			HashMap<String, Integer> followerMap = new HashMap<>();
 			ArrayList<Integer> followerList = produceFollower(3);
 				
 				String playerName = "P" + i;
-				if (i < 3)
-					message.append(playerName).append(Constant.COMMA).append(followerList.get(0)).append(Constant.COMMA).append(followerList.get(1))
-							.append(Constant.COMMA).append(followerList.get(2)).append(Constant.COMMA);
-				else
+				
 					message.append(playerName).append(Constant.COMMA).append(followerList.get(0)).append(Constant.COMMA).append(followerList.get(1))
 							.append(Constant.COMMA).append(followerList.get(2));
 				
@@ -147,17 +144,22 @@ public class GameProcessing {
 				followerMap.put("R", followerList.get(1));
 				followerMap.put("Y", followerList.get(2));
 				playerFollower.put(playerName, followerMap);
+				System.out.println("03 Message " + message.toString());
+				
+				for (int j=1;j<=3;j++) {
+				Utility.writeFile(filePath+"P"+j, message.toString());
+			}
+				
 		}
 		
 		GameParameter.getInstance().setFollower(playerFollower);
 
 	
-		System.out.println("03 Message " + message.toString());
-		for (int i=1;i<=3;i++) {
-			Utility.writeFile(filePath+"P"+i, message.toString());
-		}
+//		System.out.println("03 Message " + message.toString());
+//		for (int i=1;i<=3;i++) {
+//			Utility.writeFile(filePath+"P"+i, message.toString());
+//		}
 	}
-
 	// 04 message
 	public static void distributeReg(String filePath) throws InterruptedException {
 		Random random = new Random();
