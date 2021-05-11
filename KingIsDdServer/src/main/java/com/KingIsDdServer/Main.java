@@ -88,39 +88,45 @@ public class Main {
 			//need to check pass logic
 			passCount = 0;
 				while(true) {
-					
+					 System.out.println("PAssCount 1:" + passCount);
+
 					Boolean canBreak = false;
 					playerTurn(playerSeq.get(0));
 					System.out.println("Player " + playerSeq.get(0) + "Turn");
 					Utility.readFile(readFile, canBreak, playerSeq.get(0));
-					 if( Main.checkPassCount()) {
+					 if( checkPassCount()) {
 						 break;
 					 }
-			
+					 System.out.println("PAssCount 2:" + passCount);
 						canBreak = false;
 						playerTurn(playerSeq.get(1));
 						System.out.println("Player " + playerSeq.get(1) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(1));
 
-						 if( Main.checkPassCount()) {
+						 if( checkPassCount()) {
 							 break;
 						 }
 						 
-						 
+						 System.out.println("PAssCount 3:" + passCount);
+
 						canBreak = false;
 						playerTurn(playerSeq.get(2));
 						System.out.println("Player " + playerSeq.get(2) + "Turn");
 						Utility.readFile(readFile, canBreak, playerSeq.get(2));
 					
-						 if( Main.checkPassCount()) {
+						 if( checkPassCount()) {
 							 break;
-				}
-				GameProcessing.powerStruggle();
+						 }
 		
 			}
-			GameProcessing.winnerMessage(result);
+
+				GameProcessing.powerStruggle();
+
 		}
+			GameProcessing.winnerMessage(result);
+
 	}
+		
 }
 	private static void playerTurn(String playerName) {
 		// TODO Auto-generated method stub
@@ -132,6 +138,7 @@ public class Main {
 	}
 
 	private static Boolean checkPassCount() {
+		System.out.println("IN PAssCount :" + passCount);
 		if (Main.passCount >= 3) {
 			return true;
 		}
