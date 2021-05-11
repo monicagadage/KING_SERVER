@@ -120,7 +120,7 @@ public class Main {
 		
 			}
 
-				GameProcessing.powerStruggle();
+				ExitGame = GameProcessing.powerStruggle();
 
 		}
 			GameProcessing.winnerMessage(result);

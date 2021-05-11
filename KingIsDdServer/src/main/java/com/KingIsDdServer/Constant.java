@@ -33,6 +33,7 @@ public class Constant {
 	public static final String MESSAAGE_11 = "11";
 	public static final String MESSAAGE_12 = "12";
 	public static final String MESSAAGE_13 = "13";
+	public static final String MESSAAGE_14 = "14";
 	public static final String MESSAAGE_16 = "16";
 	
 	
@@ -42,6 +43,7 @@ public class Constant {
 	public static final String OutManoeuvre = "O";
 	public static final String Negotiate = "N";
 	public static final String Pass = "P";
+	
 	
 
 	

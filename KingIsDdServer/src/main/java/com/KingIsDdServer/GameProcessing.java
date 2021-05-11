@@ -465,12 +465,15 @@ public class GameProcessing {
 	}
 	
 	
-	public static void powerStruggle() {
+	public static boolean powerStruggle() {
 		// TODO Auto-generated method stub
 			String location = GameParameter.getInstance().getInitializeloca().get(0);
 			HashMap<String, Integer> locationFollower =   GameParameter.getInstance().getLocationFollower().get(location);
 			HashMap<String, String> powerStruggle = new HashMap<>();
 			
+			StringBuilder message = new StringBuilder(Constant.MESSAAGE_14).append(":");
+			
+			message.append(location).append(Constant.COMMA);
 			if (GameParameter.getInstance().getPowerStruggle() != null)
 				powerStruggle = GameParameter.getInstance().getPowerStruggle();
 			
@@ -484,9 +487,11 @@ public class GameProcessing {
 				{
 					GameParameter.getInstance().setBlackDisk(GameParameter.getInstance().getBlackDisk() - 1);
 						powerStruggle.put(location, "F");
-						
-					if(GameParameter.getInstance().getBlackDisk() == 0)
+						message.append("F");
+					if(GameParameter.getInstance().getBlackDisk() == 0) {
 						winnerMessage("F");
+						return true;
+					}
 				}
 			}
 				
@@ -496,18 +501,23 @@ public class GameProcessing {
 				
 					powerStruggle.put(location, "B");
 					GameParameter.getInstance().setBlueControlDisk(GameParameter.getInstance().getBlueControlDisk() - 1);
+					message.append("B");
 			
 			}
 			else {
 				if (redFoll > yollowFoll) {
 					powerStruggle.put(location, "R");
 					GameParameter.getInstance().setRedControlDisk(GameParameter.getInstance().getRedControlDisk() - 1);
+					message.append("R");
 				}
 				else {
 					powerStruggle.put(location, "Y");
 					GameParameter.getInstance().setYellowControlDisk(GameParameter.getInstance().getYellowControlDisk() - 1);
+					message.append("Y");
 				}
 			}
+			
+			
 			
 		}
 		
@@ -516,7 +526,10 @@ public class GameProcessing {
 			lastPowerStrugle = GameParameter.getInstance().getInitializeloca().get(0);
 			
 		GameParameter.getInstance().getInitializeloca().remove(0);
+		 for(int i = 1 ; i <= 3 ; i ++)
+	    		Utility.writeFile(Utility.getInstance().getFileWritePath()+"P"+i , message.toString());
 		
+		 return false;
 	}
 
 	public static void winnerMessage(String result) {
