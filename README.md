@@ -1,4 +1,4 @@
-# # KING IS DEAD SERVER
+# KING IS DEAD SERVER
 A java application designed to act as a server for playing KING IS DEAD.
 This client will communicate create File IO pipes in Linux operating system
 
