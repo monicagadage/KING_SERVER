@@ -185,8 +185,10 @@ public class GameProcessing {
 				message.append(loca.get(n1)).append(Constant.COMMA);
 				initializeloca.add(loca.get(n1));
 				loca.remove(n1);
-			} else
+			} else {
+				initializeloca.add(loca.get(0));
 				message.append(loca.get(0));
+			}
 
 		}
 		
