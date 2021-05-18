@@ -405,8 +405,8 @@ public class GameProcessing {
 		
 		String region_one = CardsPlayedByPlayerInfo.get(1);
 		String follower_one = CardsPlayedByPlayerInfo.get(2);
-		String region_two = CardsPlayedByPlayerInfo.get(1);
-		String follower_two = CardsPlayedByPlayerInfo.get(2);
+		String region_two = CardsPlayedByPlayerInfo.get(3);
+		String follower_two = CardsPlayedByPlayerInfo.get(4);
 		
 		int count_one = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one);
 		int count_two = GameParameter.getInstance().getLocationFollower().get(region_two).get(follower_two);
@@ -437,9 +437,9 @@ public class GameProcessing {
 		// TODO Auto-generated method stub
 		String region_one = CardsPlayedByPlayerInfo.get(1);
 		String follower_one = CardsPlayedByPlayerInfo.get(2);
-		String follower_one1 = CardsPlayedByPlayerInfo.get(2);
-		String region_two = CardsPlayedByPlayerInfo.get(1);
-		String follower_two = CardsPlayedByPlayerInfo.get(2);
+		String follower_one1 = CardsPlayedByPlayerInfo.get(3);
+		String region_two = CardsPlayedByPlayerInfo.get(4);
+		String follower_two = CardsPlayedByPlayerInfo.get(5);
 		
 		int count_one = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one);
 		int count_one1 = GameParameter.getInstance().getLocationFollower().get(region_one).get(follower_one1);
