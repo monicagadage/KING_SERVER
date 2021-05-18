@@ -2,7 +2,8 @@ package com.KingIsDdServer;
 
 import static java.nio.file.StandardOpenOption.WRITE;
 
-
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class Utility {
 	private String writefilepath;
 	private String readfilepath;
 	private static volatile Utility Utility = null;
+	int count= 0;
 
 	Utility() {
 		// private constructor
@@ -47,18 +49,24 @@ public class Utility {
 	}
 
 	public static void writeFile(String filePath, String message) {
+		
 		try {
-			System.out.println("in write file");
-			message= message+"\n";
+			System.out.println("[write file ]  message "+message);		
 			Path path = Paths.get(filePath);
 			OutputStream outputStream = Files.newOutputStream(path, WRITE);
-
 			outputStream.write(message.getBytes());
+			BufferedInputStream reader = new BufferedInputStream(new FileInputStream( filePath ) );
 
+			while(reader.available() > 0) {
+				
+			}
+			
+			reader.close();
 			outputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 	
 	public static void readFile(String filename, boolean canBreak, String playerName) throws InterruptedException, IOException {
